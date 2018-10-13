@@ -12,12 +12,13 @@
         </select>
         <label>Year of Release</label>
         <input v-model="body.year" type="number" />
-        <button type="submit">Submit</button>
+        <button class="btn btn-submit" type="submit">Submit</button>
       </form>
       <div v-for="movie in movies" :key="movie.id" class="text-center">
-        {{ movie.title }}
-        {{ movie.genres }}
-        {{ movie.year }}
+        <div class="d-block">
+          {{ movie.title }}
+          {{ movie.year }}
+        </div>
       </div>
     </div>
   </div>
@@ -48,7 +49,11 @@ export default {
       ]
     }
   },
-  
+  created(){
+    axios.get('http://localhost:5000').then(response => {
+      this.movies = response.data
+    }).catch(err => console.log(err))
+  },
   methods: {
     handleSubmit(){
       axios.post('http://localhost:5000/add', {
