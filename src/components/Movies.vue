@@ -41,7 +41,10 @@ export default {
         'comedy',
         'crime',
         'disaster',
-        'documentary'
+        'documentary',
+        'science fiction',
+        'history',
+        'drama'
       ]
     }
   },

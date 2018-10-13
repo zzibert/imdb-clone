@@ -20,8 +20,8 @@ app.set('port', (process.env.PORT || 5000));
 
 app.post('/add', (req, res) => {
     console.log(req.body)
-    Movie.create(req.body).catch(err => console.log(err))
-    res.send("item hopefully saved!")
+    Movie.create(req.body).catch(err => console.log(req.body.title + " was not succesfully saved: " + err))
+    res.send(req.body.title + " was succesfully saved!")
 })
 
 app.listen(app.get('port'), function() {
