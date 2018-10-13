@@ -49,14 +49,18 @@ export default {
     axios.get('http://localhost:5000').then(response => {
       this.movies = response.data
       console.log(response.data)
+    }).catch(err => {
+      console.log(err)
     })
   },
   methods: {
     handleSubmit(){
-      axios.post('/todo', {
-        body: this.body
+      axios.post('http://localhost:5000/add', {
+        title: this.body.title,
+        genre: this.body.genre,
+        year: this.body.year
       }).then(response => {
-        console.log(response)
+        console.log(response.data)
       }).catch(err => console.log(err))
     }
   }
