@@ -45,14 +45,7 @@ export default {
       ]
     }
   },
-  created(){
-    axios.get('http://localhost:5000').then(response => {
-      this.movies = response.data
-      console.log(response.data)
-    }).catch(err => {
-      console.log(err)
-    })
-  },
+  
   methods: {
     handleSubmit(){
       axios.post('http://localhost:5000/add', {
