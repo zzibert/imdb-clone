@@ -6,6 +6,8 @@
       <form method="post" @submit.prevent="handleSubmit">
         <label>Movie title</label>
         <input type="text" v-model="body.title" required />
+        <label>Movie Director</label>
+        <input type="text" v-model="body.director" required />
         <label>Select Genre</label>
         <select v-model="body.genre">
           <option v-for="genre in genres" :value="genre" :key="genre">{{ genre }}</option>
@@ -15,7 +17,7 @@
         <button class="btn btn-submit" type="submit">Submit</button>
       </form>
       <div v-for="movie in movies" :key="movie.id" class="text-center">
-        <div class="d-block">
+        <div class="movie-block">
           {{ movie.title }}
           {{ movie.year }}
         </div>
@@ -32,6 +34,7 @@ export default {
       movies: "",
       body: {
         title: '',
+        director: '',
         genre: '',
         year: ''
       },
@@ -58,6 +61,7 @@ export default {
     handleSubmit(){
       axios.post('http://localhost:5000/add', {
         title: this.body.title,
+        director: this.body.director,
         genre: this.body.genre,
         year: this.body.year
       }).then(response => {
@@ -70,6 +74,17 @@ export default {
 
 
 <style scoped>
+.movie-block{
+  height: 200px;
+  width: 400px;
+  border: 1px solid black;
+  margin-bottom: 20px;
+  margin-left: 40%;
+}
 
+form{
+  border: 1px solid black;
+  background-color: greenyellow;
+}
 
 </style>
