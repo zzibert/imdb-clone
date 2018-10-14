@@ -22,6 +22,13 @@ app.get('/', (req, res) => {
     })
 })
 
+app.post('/query', (req, res) => {
+    console.log(req.body.title)
+    Movie.find({
+        'director': req.body.title
+    }).then(data => res.send(data))
+})
+
 app.post('/add', (req, res) => {
     console.log(req.body)
     Movie.create(req.body).catch(err => console.log(req.body.title + " was not succesfully saved: " + err))

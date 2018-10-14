@@ -1,18 +1,16 @@
 <template>
     <div>
+        <h1 class="text-center">Welcome to my imdb clone</h1>
         <movies></movies>
-        <movie-filter></movie-filter>
     </div>
 </template>
 
 <script>
 import Movies from './Movies.vue'
-import MovieFilter from './MovieFilter.vue'
 export default {
     
     components: {
-        'movies': Movies,
-        'movie-filter': MovieFilter
+        'movies': Movies
     }
 
 }

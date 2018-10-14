@@ -1,7 +1,22 @@
 <template>
   <div>
+    <div class="container text-center">
+        <div class="row bg-success">
+            <h2>Movie Filter</h2>
+            <form method="get" @submit.prevent="handleQuery">
+                <label>Filter by Title</label>
+                <input type="text" v-model="title" />
+                <label>Filter by Director</label>
+                <input type="text" v-model="director" />
+                <label>Filter by Genre</label>
+                <input type="text" v-model="genre" />
+                <label>Filter by Year</label>
+                <input type="number" v-model="year" />
+                <button type="submit" class="btn btn-submit">Query</button>
+            </form>
+        </div>
+    </div>
     <div class="text-center">
-      <h1>Welcome to my imdb clone</h1>
       <h2>Enter a new movie</h2>
       <form method="post" @submit.prevent="handleSubmit">
         <label>Movie title</label>
@@ -16,10 +31,11 @@
         <input v-model="body.year" type="number" />
         <button class="btn btn-submit" type="submit">Submit</button>
       </form>
-      <div v-for="movie in movies" :key="movie.id" class="text-center">
+      <div v-for="movie in movies" :key="movie._id" class="text-center">
         <div class="movie-block">
           {{ movie.title }}
           {{ movie.year }}
+          {{ movie.director }}
         </div>
       </div>
     </div>
@@ -32,6 +48,10 @@ export default {
   data () {
     return {
       movies: "",
+      title: '',
+      director: '',
+      genre: '',
+      year: '',
       body: {
         title: '',
         director: '',
@@ -67,6 +87,16 @@ export default {
       }).then(response => {
         console.log(response.data)
       }).catch(err => console.log(err))
+    },
+    handleQuery(){
+      axios.post('http://localhost:5000/query', {
+        title: this.title,
+        director: this.director,
+        genre: this.genre,
+        year: this.year
+      }).then(response => {
+        this.movies = response.data
+      }).catch(err => console.log(err))
     }
   }
 }
@@ -75,11 +105,12 @@ export default {
 
 <style scoped>
 .movie-block{
-  height: 200px;
-  width: 400px;
+  height: 400px;
+  width: 600px;
   border: 1px solid black;
-  margin-bottom: 20px;
-  margin-left: 40%;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 30%;
 }
 
 form{
