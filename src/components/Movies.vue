@@ -31,6 +31,10 @@
         <input v-model="body.year" type="number" />
         <button class="btn btn-submit" type="submit">Submit</button>
       </form>
+      <label>Select Sorting Option</label>
+      <select @click="sortMovies" v-model="sortOption">
+        <option v-for="option in sortingOptions" :value="option" :key="option">{{ option }}</option>
+      </select>
       <div v-for="movie in movies" :key="movie._id" class="text-center">
         <div class="movie-block">
           {{ movie.title }}
@@ -47,6 +51,12 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      sortOption: 'year',
+      sortingOptions: [
+        'year',
+        'director',
+        'title'
+      ],
       movies: "",
       title: '',
       director: '',
@@ -97,6 +107,32 @@ export default {
       }).then(response => {
         this.movies = response.data
       }).catch(err => console.log(err))
+    },
+    sortMovies(){
+      if(this.sortOption == 'year'){
+        this.movies.sort((a, b) => {
+          if(a.year < b.year)
+            return -1
+          else
+            return 1
+        })
+      }
+      else if(this.sortOption == 'director'){
+        this.movies.sort((a, b) => {
+          if(a.director < b.director)
+            return -1
+          else
+            return 1
+        })
+      }
+      else if(this.sortOption == 'title'){
+        this.movies.sort((a, b) => {
+          if(a.title < b.title)
+            return -1
+          else
+            return 1
+        })
+      }
     }
   }
 }
