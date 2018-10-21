@@ -23,10 +23,12 @@ app.get('/', (req, res) => {
 })
 
 app.post('/query', (req, res) => {
-    console.log(req.body.title)
-    Movie.find({
-        'director': req.body.title
-    }).then(data => res.send(data))
+    let query = {}
+    for(let prop in req.body){
+        if(req.body[prop] != '')
+            query[prop] = req.body[prop]
+    }
+    Movie.find(query).then(data => res.send(data))
 })
 
 app.post('/add', (req, res) => {
