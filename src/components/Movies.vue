@@ -58,7 +58,7 @@
       <select @click="sortMovies" v-model="sortOption">
         <option v-for="option in sortingOptions" :value="option" :key="option">{{ option }}</option>
       </select>
-      <div v-for="movie in movies" :key="movie._id" class="text-center ">
+      <div v-for="movie in movies" :key="movie._id" class="text-center" @click="showReview">
         <div class="movie-block">
           {{ movie.title }}
           {{ movie.year }}

@@ -11,6 +11,11 @@ export default new Router({
       path: '/',
       name: 'Movies',
       component: MainComponent
+    },
+    {
+      path: '/reviews/:id',
+      name: 'MovieReview',
+      component: Review
     }
   ]
 })
