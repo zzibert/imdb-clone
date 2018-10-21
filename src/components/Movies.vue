@@ -1,17 +1,40 @@
 <template>
   <div>
     <div class="container text-center">
-        <div class="row bg-success">
+        <div class=" bg-success">
             <h2>Movie Filter</h2>
             <form method="get" @submit.prevent="handleQuery">
-                <label>Filter by Title</label>
-                <input type="text" v-model="title" />
-                <label>Filter by Director</label>
-                <input type="text" v-model="director" />
-                <label>Filter by Genre</label>
-                <input type="text" v-model="genre" />
-                <label>Filter by Year</label>
-                <input type="number" v-model="year" />
+                <div class="row d-flex justify-content-center border pt-2 pb-2">
+                  <div class="pr-2">
+                    <label>Filter by Title</label>
+                  </div>
+                  <input type="text" v-model="filter.title" />
+                </div>
+                <div class="row d-flex justify-content-center border pt-2 pb-2">
+                  <div class="pr-2">
+                    <label>Filter by Director</label>
+                  </div>
+                  <input type="text" v-model="filter.director" />
+                </div>
+                <div class="row d-flex justify-content-center border pt-2 pb-2">
+                  <div class="pr-2">
+                    <label>Filter by Genre</label>
+                  </div>
+                  <input type="text" v-model="filter.genre" />
+                </div>
+                <div class="row border d-flex justify-content-center">
+                  <label>Filter by Year</label>
+                </div>
+                <div class="row border d-flex justify-content-center">
+                  <label>From the year:</label>
+                  <input type="range" min="1914" max="2018" v-model="filter.fromYear" />
+                  {{ filter.fromYear }}
+                </div>
+                <div class="row border d-flex justify-content-center">
+                  <label>To the year:</label>
+                  <input type="range" min="1914" max="2018" v-model="filter.toYear" />
+                  {{ filter.toYear }}
+                </div>
                 <button type="submit" class="btn btn-submit">Query</button>
             </form>
         </div>
@@ -35,7 +58,7 @@
       <select @click="sortMovies" v-model="sortOption">
         <option v-for="option in sortingOptions" :value="option" :key="option">{{ option }}</option>
       </select>
-      <div v-for="movie in movies" :key="movie._id" class="text-center">
+      <div v-for="movie in movies" :key="movie._id" class="text-center ">
         <div class="movie-block">
           {{ movie.title }}
           {{ movie.year }}
@@ -58,10 +81,13 @@ export default {
         'title'
       ],
       movies: "",
-      title: '',
-      director: '',
-      genre: '',
-      year: '',
+      filter: {
+        title: '',
+        director: '',
+        genre: '',
+        fromYear: 1914,
+        toYear: 2018
+      },
       body: {
         title: '',
         director: '',
@@ -100,10 +126,11 @@ export default {
     },
     handleQuery(){
       axios.post('http://localhost:5000/query', {
-        title: this.title,
-        director: this.director,
-        genre: this.genre,
-        year: this.year
+        title: this.filter.title,
+        director: this.filter.director,
+        genre: this.filter.genre,
+        from: this.filter.fromYear,
+        to: this.filter.toYear
       }).then(response => {
         this.movies = response.data
       }).catch(err => console.log(err))
@@ -122,6 +149,8 @@ export default {
 
 
 <style scoped>
+
+
 .movie-block{
   height: 400px;
   width: 600px;

@@ -25,8 +25,12 @@ app.get('/', (req, res) => {
 app.post('/query', (req, res) => {
     let query = {}
     for(let prop in req.body){
-        if(req.body[prop] != '')
-            query[prop] = req.body[prop]
+        if(req.body[prop] != ''){
+            if(prop == 'from' || prop == 'to')
+                query['year'] = { $gte: req.body.from, $lte: req.body.to }
+            else
+                query[prop] = req.body[prop]
+        }
     }
     Movie.find(query).then(data => res.send(data))
 })
